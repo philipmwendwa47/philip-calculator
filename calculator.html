@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .all-div {
+            background-color: green;
+            height: 320px;
+            width: 250px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .button {
+            background-color: white;
+            color: black;
+            height: 50px;
+            width: 50px;
+            margin: 5px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        .input {
+            height: 30px;
+            width: calc(100% - 20px);
+            margin-bottom: 10px;
+            padding: 5px;
+            font-size: 18px;
+            color: rgb(75, 75, 248);
+        }
+
+        /* Targeting only the answer box */
+        .result-input.answer {
+            margin-top: 10px;
+            font-size: 18px;
+            color: yellow; /* Change color to yellow */
+        }
+    </style>
+</head>
+<body>
+    <h1>My Calculator</h1>
+    <div class="all-div">
+        <div class="input-box"><input type="text" class="input" id="mainInput"></div>
+        <div class="input-box"><input type="text" class="input result-input answer" readonly></div>
+        <div class="multi-add">
+            <button class="button" type="button" onclick="setOperation('*')">X</button>
+            <button class="button" type="button" onclick="setOperation('+')">+</button>
+        </div>
+        <div class="subtraction">
+            <button class="button" type="button" onclick="setOperation('-')">-</button>
+            <button class="button" type="button" onclick="setOperation('/')">/</button>
+        </div>
+        <button class="button" type="button" onclick="calculate()">=</button>
+    </div>
+
+    <script>
+        function setOperation(operator) {
+            const inputField = document.getElementById('mainInput');
+            inputField.value += ` ${operator} `;
+        }
+
+        function calculate() {
+            const inputField = document.getElementById('mainInput');
+            const resultField = document.querySelector('.result-input.answer');
+            const expression = inputField.value.trim();
+            
+            // Check if the expression is not empty
+            if (expression !== '') {
+                // Replace '÷' symbol with '/'
+                const processedExpression = expression.replace(/÷/g, '/');
+                
+                const result = eval(processedExpression);
+                resultField.value = result;
+                
+                // Optional: Display the result in the console
+                console.log('Result:', result);
+            }
+        }
+
+        // Event listener for Enter key press
+        document.getElementById('mainInput').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                calculate(); // Calculate result on Enter key press
+            }
+        });
+    </script>
+</body>
+</html>
